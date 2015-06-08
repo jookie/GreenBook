@@ -1,25 +1,46 @@
-== Welcome to GreenBooking
+== Welcome to Booking Appointments RESTful API
 
-* Rails version:'4.1.8'
+==Descripton:
+    The project contains RESTful web API using Ruby On Rails. The API expose the
+    following 4 methods CRUD operations on appointment data
+    resources.
+    - Create
+    - Update
+    - Delete
+    - List (should accept optional start/end time parameters to filter data)
+    An appointment resource, is considered valid if
+    the start and end times are in the future and do not overlap an existing
+    appointment on the same day. All operations will return valid JSON
+    along with the appropriate HTTP status codes.
+    The testing,  depends on the developer preference
+    may be done by MiniTest or Rspec. Both tests contain almost identical specs.
+    The developer may use it to bench-mark Rspec and Ruby test.
 
-* Ruby version: 2.15
+==Version
+    Rails version:'4.1.8'
+    Ruby version: 2.15
 
-In the project folder run:
+==Command line tasks:
+    bundle Install
+    rake db:setup
+    rake spec
+    rake test
+    rake doc:app
+    doc/app/index.html
 
-bundle Install
-rake db:setup
-rake spec
-rake test
+==Database Creation
+Import from \Carecloud Ruby test part 2. A comma-delimited file which contains some appointment
+data.
 
-* Gem initialization:      bundle Install
+==Runing the test suite:
+    rake spec
+    rake test
+Both tests contain almost identical specs.
+    The developer may use it to bench-mark Rspec and Ruby test.
 
+==documentation:
 
-* Database Creation, seeding and initialization : rake db:setup
+    rake doc:app
+    open doc/app/index.html
 
-* Runing the test suite:
-rake spec
-rake test
-
-documentation: rake doc:app
-
-
+location: https://github.com/jookie/GreenBook
