@@ -17,7 +17,7 @@
 ==Version
     Rails version:'4.1.8'
     Ruby version: 2.15
-==Initial Command line tasks:
+==Initial Command line tasks
     bundle Install
     rake db:setup
     rake spec
