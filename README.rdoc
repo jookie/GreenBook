@@ -1,23 +1,25 @@
-== Welcome to GreenBooking cloud
+== Welcome to GreenBooking
 
-This README is documenting whatever steps are necessary to get the
-application up and running.
+* Rails version:'4.1.8'
 
-Things you may want to cover:
+* Ruby version: 2.15
 
-* Ruby version
+In the project folder run:
 
-* System dependencies
+bundle Install
+rake db:setup
+rake spec
+rake test
 
-* Configuration
+* Gem initialization:      bundle Install
 
-* Database creation
 
-* Database initialization
+* Database Creation, seeding and initialization : rake db:setup
 
-* How to run the test suite
+* Runing the test suite:
+rake spec
+rake test
 
-* Services (job queues, cache servers, search engines, etc.)
+documentation: rake doc:app
 
-* Deployment instructions
 

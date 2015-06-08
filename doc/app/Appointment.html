@@ -6,19 +6,16 @@
 
 <title>class Appointment - &quot;GreenBook</title>
 
-<link href="./fonts.css" rel="stylesheet">
-<link href="./rdoc.css" rel="stylesheet">
-
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
 <script src="./js/jquery.js"></script>
-<script src="./js/navigation.js"></script>
-<script src="./js/search_index.js"></script>
-<script src="./js/search.js"></script>
-<script src="./js/searcher.js"></script>
 <script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
 
 
 <body id="top" role="document" class="class">
@@ -73,9 +70,7 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-c-filter">::filter</a>
-    
-    <li class="calls-super" ><a href="#method-i-to_json">#to_json</a>
+    <li ><a href="#method-c-in_time_slot_only">::in_time_slot_only</a>
     
   </ul>
 </div>
@@ -83,15 +78,19 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-Appointment">  <h1 id="class-Appointment" class="class">
+<main role="main" aria-labelledby="class-Appointment">
+  <h1 id="class-Appointment" class="class">
     class Appointment
   </h1>
 
   <section class="description">
     
-<p>Class that model the appointments resource. When creating or updating a
-resource, it should only be considered valid if the start and end times are
-in the future and do not overlap an existing appointment on the same day.</p>
+<p>appmodelsappointment.rb Model the appointments resource. When creating or
+updating a resource, it should only be considered valid if the start and
+end times are in the future and do not overlap an existing appointment on
+the same day. Attrtibutes: <a href="Appointment.html">Appointment</a>
+start_time:datetime end_time:datetime first_name:string last_name:string
+comments:string</p>
 
   </section>
 
@@ -114,11 +113,11 @@ in the future and do not overlap an existing appointment on the same day.</p>
        </header>
 
     
-      <div id="method-c-filter" class="method-detail ">
+      <div id="method-c-in_time_slot_only" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">filter</span><span
-            class="method-args">(attributes)</span>
+          <span class="method-name">in_time_slot_only</span><span
+            class="method-args">(params)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -132,67 +131,19 @@ in the future and do not overlap an existing appointment on the same day.</p>
           
 
           
-          <div class="method-source-code" id="filter-source">
-            <pre><span class="ruby-comment"># File app/models/appointment.rb, line 17</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">filter</span>(<span class="ruby-identifier">attributes</span>)
-  <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-keyword">self</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">scope</span>, (<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)<span class="ruby-operator">|</span>
-    <span class="ruby-keyword">return</span> <span class="ruby-identifier">scope</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">blank?</span>
+          <div class="method-source-code" id="in_time_slot_only-source">
+            <pre><span class="ruby-comment"># File app/models/appointment.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Appointment</span>.<span class="ruby-identifier">in_time_slot_only</span>(<span class="ruby-identifier">params</span>)
+  <span class="ruby-identifier">params</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-constant">Appointment</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">booking_scope</span>, (<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)<span class="ruby-operator">|</span>
     <span class="ruby-keyword">case</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_sym</span>
       <span class="ruby-keyword">when</span> <span class="ruby-value">:start</span>
-        <span class="ruby-identifier">scope</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;start_time &gt;= ?&quot;</span>, <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_date</span>)
+        <span class="ruby-identifier">booking_scope</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;start_time &gt;= ?&quot;</span>, <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_date</span>)
       <span class="ruby-keyword">when</span> <span class="ruby-value">:end</span>
-        <span class="ruby-identifier">scope</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;end_time &lt;= ?&quot;</span>, <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_date</span>)
+        <span class="ruby-identifier">booking_scope</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;end_time   &lt;= ?&quot;</span>, <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_date</span>)
       <span class="ruby-keyword">else</span>
-        <span class="ruby-identifier">scope</span>
+        <span class="ruby-identifier">booking_scope</span>
     <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-    </section>
-  
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
-       <header>
-         <h3>Public Instance Methods</h3>
-       </header>
-
-    
-      <div id="method-i-to_json" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">to_json</span><span
-            class="method-args">(options={})</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Exclude timestamps info from json output.</p>
-          
-          
-            <div class="method-calls-super">
-              Calls superclass method
-              
-            </div>
-          
-
-          
-          <div class="method-source-code" id="to_json-source">
-            <pre><span class="ruby-comment"># File app/models/appointment.rb, line 32</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_json</span>(<span class="ruby-identifier">options</span>={})
-  <span class="ruby-identifier">options</span>[<span class="ruby-value">:except</span>] <span class="ruby-operator">||=</span> [<span class="ruby-value">:created_at</span>, <span class="ruby-value">:updated_at</span>]
-  <span class="ruby-keyword">super</span>(<span class="ruby-identifier">options</span>)
+  }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -212,7 +163,7 @@ in the future and do not overlap an existing appointment on the same day.</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
-  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

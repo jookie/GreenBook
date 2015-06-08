@@ -6,19 +6,16 @@
 
 <title>class AppointmentsController - &quot;GreenBook</title>
 
-<link href="./fonts.css" rel="stylesheet">
-<link href="./rdoc.css" rel="stylesheet">
-
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
 <script src="./js/jquery.js"></script>
-<script src="./js/navigation.js"></script>
-<script src="./js/search_index.js"></script>
-<script src="./js/search.js"></script>
-<script src="./js/searcher.js"></script>
 <script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
 
 
 <body id="top" role="document" class="class">
@@ -65,7 +62,18 @@
   
 </div>
 
-    
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="ApplicationHelper.html">ApplicationHelper</a>
+  
+  
+  </ul>
+</div>
+
     
     <!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
@@ -96,6 +104,16 @@
 
   <section class="description">
     
+<p>app/controllers/appointments_controller.rb</p>
+
+<pre>This class exposes the following 4 methods to facilitate CRUD operations on the appointment
+Create
+Update
+Delete
+List (accepts optional start/end time parameters to filter data)
+All operations returns valid JSON
+along with the appropriate HTTP status codes.</pre>
+
   </section>
 
   
@@ -136,10 +154,9 @@
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/appointments_controller.rb, line 19</span>
+            <pre><span class="ruby-comment"># File app/controllers/appointments_controller.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-ivar">@appointment</span> = <span class="ruby-constant">Appointment</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">appointment_params</span>)
-
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@appointment</span>.<span class="ruby-identifier">save</span>
     <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@appointment</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">:created</span>, <span class="ruby-identifier">location</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@appointment</span>
   <span class="ruby-keyword">else</span>
@@ -175,11 +192,16 @@
 
           
           <div class="method-source-code" id="destroy-source">
-            <pre><span class="ruby-comment"># File app/controllers/appointments_controller.rb, line 43</span>
+            <pre><span class="ruby-comment"># File app/controllers/appointments_controller.rb, line 66</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-ivar">@appointment</span> = <span class="ruby-constant">Appointment</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-keyword">rescue</span>
+    <span class="ruby-identifier">respond_info</span>(<span class="ruby-string">&#39;error&#39;</span>, <span class="ruby-string">&#39;internal_server_error&#39;</span>, <span class="ruby-string">&#39;Delete Appointment Failed&#39;</span>, <span class="ruby-value">:internal_server_error</span>)
+    <span class="ruby-keyword">return</span>
+  <span class="ruby-keyword">end</span>
   <span class="ruby-ivar">@appointment</span>.<span class="ruby-identifier">destroy</span>
-
-  <span class="ruby-identifier">head</span> <span class="ruby-value">:no_content</span>
+  <span class="ruby-identifier">respond_info</span>(<span class="ruby-string">&#39;success&#39;</span>, <span class="ruby-string">&#39;success&#39;</span>, <span class="ruby-string">&#39;Success&#39;</span>, <span class="ruby-value">:no_content</span>) <span class="ruby-comment">#HTTP status code: No Content</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -210,10 +232,15 @@
 
           
           <div class="method-source-code" id="index-source">
-            <pre><span class="ruby-comment"># File app/controllers/appointments_controller.rb, line 6</span>
+            <pre><span class="ruby-comment"># File app/controllers/appointments_controller.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
-  <span class="ruby-ivar">@appointments</span> = <span class="ruby-constant">Appointment</span>.<span class="ruby-identifier">filter</span>(<span class="ruby-identifier">filter_params</span>).<span class="ruby-identifier">all</span>
-  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@appointments</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">time_slot_params</span>[<span class="ruby-value">:start</span>].<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">time_slot_params</span>[<span class="ruby-value">:end</span>].<span class="ruby-identifier">present?</span>
+    <span class="ruby-ivar">@appointments</span> = <span class="ruby-constant">Appointment</span>.<span class="ruby-identifier">all</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-comment">#time_slot_params[:start], time_slot_params[:end]</span>
+    <span class="ruby-ivar">@appointments</span> = <span class="ruby-constant">Appointment</span>.<span class="ruby-identifier">in_time_slot_only</span>(<span class="ruby-identifier">time_slot_params</span>).<span class="ruby-identifier">all</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@appointments</span>, <span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:ok</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -244,9 +271,15 @@
 
           
           <div class="method-source-code" id="show-source">
-            <pre><span class="ruby-comment"># File app/controllers/appointments_controller.rb, line 13</span>
+            <pre><span class="ruby-comment"># File app/controllers/appointments_controller.rb, line 27</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
-  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@appointment</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-ivar">@appointment</span> = <span class="ruby-constant">Appointment</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-keyword">rescue</span>
+    <span class="ruby-identifier">respond_info</span>(<span class="ruby-string">&#39;error&#39;</span>, <span class="ruby-string">&#39;internal_server_error&#39;</span>, <span class="ruby-string">&#39;Show appointment Failed&#39;</span>, <span class="ruby-value">:internal_server_error</span>)
+    <span class="ruby-keyword">return</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@appointment</span>, <span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:ok</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -277,12 +310,16 @@
 
           
           <div class="method-source-code" id="update-source">
-            <pre><span class="ruby-comment"># File app/controllers/appointments_controller.rb, line 31</span>
+            <pre><span class="ruby-comment"># File app/controllers/appointments_controller.rb, line 50</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
-  <span class="ruby-ivar">@appointment</span> = <span class="ruby-constant">Appointment</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
-
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-ivar">@appointment</span> = <span class="ruby-constant">Appointment</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-keyword">rescue</span>
+    <span class="ruby-identifier">respond_info</span>(<span class="ruby-string">&#39;error&#39;</span>, <span class="ruby-string">&#39;internal_server_error&#39;</span>, <span class="ruby-string">&#39;Update Appointment Failed&#39;</span>, <span class="ruby-value">:internal_server_error</span>)
+    <span class="ruby-keyword">return</span>
+  <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@appointment</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">appointment_params</span>)
-    <span class="ruby-identifier">head</span> <span class="ruby-value">:no_content</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-value">:json</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@appointments</span>, <span class="ruby-value">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:no_content</span> <span class="ruby-comment">#HTTP status code: 204 No Content</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@appointment</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">:unprocessable_entity</span>
   <span class="ruby-keyword">end</span>
@@ -305,7 +342,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
-  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
