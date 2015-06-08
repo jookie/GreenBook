@@ -26,8 +26,6 @@
     open doc/app/index.html
 ==Database Creation
     db:setup will import the data from db\Carecloud Ruby data.
-Both tests contain almost identical specs.
-    The developer may use it to bench-mark RSpec and Ruby test.
 ==documentation:
     rake doc:app
     open doc/app/index.html
