@@ -1,11 +1,16 @@
 #app/controllers/appointments_controller.rb
-# This class exposes the following 4 methods to facilitate CRUD operations on the appointment
+# This class exposes the following methods to facilitate CRUD operations on the appointment
 # Create
 # Update
 # Delete
 # List (accepts optional start/end time parameters to filter data)
 # All operations returns valid JSON
 # along with the appropriate HTTP status codes.
+# - Create POST     /appointments
+# - Update PUT      /appointments/:id
+# - Delete DELETE   /appointments/:id
+# - List   GET      /appointments   Should accept optional start/end time parameters to filter data.
+# - Show   appointments/:id
 class AppointmentsController < ApplicationController
 
   include ApplicationHelper

@@ -51,6 +51,20 @@
   </div>
 
   
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+  <ul class="link-list" role="directory">
+    <li><a href="#label-Welcome+to+Booking+Appointments+RESTful+API">Welcome to Booking Appointments RESTful API</a>
+    <li><a href="#label-Description-3A">Description:</a>
+    <li><a href="#label-Test+suite-3A">Test suite:</a>
+    <li><a href="#label-Version">Version</a>
+    <li><a href="#label-Initial+Command+line+tasks-3A">Initial Command line tasks:</a>
+    <li><a href="#label-Database+Creation">Database Creation</a>
+    <li><a href="#label-documentation-3A">documentation:</a>
+  </ul>
+</div>
+
 
   <div id="project-metadata">
     <div id="fileindex-section" class="nav-section">
@@ -68,25 +82,59 @@
 
 <main role="main" aria-label="Page README.rdoc">
 
-<h2 id="label-Welcome+to+GreenBooking">Welcome to GreenBooking<span><a href="#label-Welcome+to+GreenBooking">&para;</a> <a href="#top">&uarr;</a></span></h2>
-<ul><li>
-<p>Rails version:&#39;4.1.8&#39;</p>
-</li><li>
-<p>Ruby version: 2.15</p>
-</li></ul>
+<h2 id="label-Welcome+to+Booking+Appointments+RESTful+API">Welcome to Booking Appointments RESTful API<span><a href="#label-Welcome+to+Booking+Appointments+RESTful+API">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>In the project folder run:</p>
+<h2 id="label-Description-3A">Description:<span><a href="#label-Description-3A">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>bundle Install rake db:setup rake spec rake test</p>
-<ul><li>
-<p>Gem initialization:      bundle Install</p>
-</li><li>
-<p>Database Creation, seeding and initialization : rake db:setup</p>
-</li><li>
-<p>Runing the test suite:</p>
-</li></ul>
+<pre>The project contains RESTful API using Ruby On Rails. The API expose the
+following CRUD operations on appointments data.
+- Create POST     /appointments
+- Update PUT      /appointments/:id
+- Delete DELETE   /appointments/:id
+- List   GET      /appointments   Should accept optional start/end time parameters to filter data.
+An appointment resource, is considered valid if start and end times are in the future and do not overlap an existing
+appointment on the same day. All operations will return valid JSON along with the appropriate HTTP status codes.
+- Show   appointments/:id (not required by the spec , but it is convenient for testing.</pre>
 
-<p>rake spec rake test</p>
+<h2 id="label-Test+suite-3A">Test suite:<span><a href="#label-Test+suite-3A">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<pre>I prefer RSpec over MiniTest because the syntax encourages human readable tests.
+How ever the API has both. You may benchmark the framework to use, and they all have their merits,
+rake spec
+rake test</pre>
+
+<h2 id="label-Version">Version<span><a href="#label-Version">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<pre class="ruby"><span class="ruby-constant">Rails</span> <span class="ruby-identifier">version</span>:<span class="ruby-string">&#39;4.1.8&#39;</span>
+<span class="ruby-constant">Ruby</span> <span class="ruby-identifier">version</span><span class="ruby-operator">:</span> <span class="ruby-value">2.15</span>
+</pre>
+
+<h2 id="label-Initial+Command+line+tasks-3A">Initial Command line tasks:<span><a href="#label-Initial+Command+line+tasks-3A">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<pre class="ruby"><span class="ruby-identifier">bundle</span> <span class="ruby-constant">Install</span>
+<span class="ruby-identifier">rake</span> <span class="ruby-identifier">db</span>:<span class="ruby-identifier">setup</span>
+<span class="ruby-identifier">rake</span> <span class="ruby-identifier">spec</span>
+<span class="ruby-identifier">rake</span> <span class="ruby-identifier">test</span>
+<span class="ruby-identifier">rake</span> <span class="ruby-identifier">doc</span>:<span class="ruby-identifier">app</span>
+<span class="ruby-identifier">doc</span><span class="ruby-operator">/</span><span class="ruby-identifier">app</span><span class="ruby-operator">/</span><span class="ruby-identifier">index</span>.<span class="ruby-identifier">html</span>
+</pre>
+
+<h2 id="label-Database+Creation">Database Creation<span><a href="#label-Database+Creation">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<pre>db:setup will import the data from db\Carecloud Ruby data.</pre>
+
+<p>Both tests contain almost identical specs.</p>
+
+<pre>The developer may use it to bench-mark RSpec and Ruby test.</pre>
+
+<h2 id="label-documentation-3A">documentation:<span><a href="#label-documentation-3A">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<pre class="ruby"><span class="ruby-identifier">rake</span> <span class="ruby-identifier">doc</span>:<span class="ruby-identifier">app</span>
+<span class="ruby-identifier">open</span> <span class="ruby-identifier">doc</span><span class="ruby-operator">/</span><span class="ruby-identifier">app</span><span class="ruby-operator">/</span><span class="ruby-identifier">index</span>.<span class="ruby-identifier">html</span>
+</pre>
+
+<p>location: <a
+href="https://github.com/jookie/GreenBook">github.com/jookie/GreenBook</a></p>
 </main>
 
 
