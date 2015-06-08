@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+end_time_greater:
+  start_time: <%= Date.today %>
+  end_time: <%= (Date.today - 1.hour) %>
+  first_name: Danil
+  last_name:  Jones
+  comments:  end_time_greater
+
+start_today_for_30_minutes:
+  start_time: <%= Date.today %>
+  end_time: <%= (Date.today + 30.minutes) %>
+  first_name: Rina
+  last_name:  Dror
+  comments: "start_now_for_30_minutes"
+
+taken_earlier_today:
+  start_time: <%= (Date.today + 10.minutes) %>
+  end_time:   <%= (Date.today + 1.hour    ) %>
+  first_name: Dror
+  last_name: Namir
+  comments: taken_1
+
+taken_2:
+  start_time: <%= (Date.today - 10.minutes) %>
+  end_time: <%= (Date.today + 30.minutes) %>
+  first_name: David
+  last_name: Baum
+  comments: taken_2
