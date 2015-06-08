@@ -1,5 +1,5 @@
 == Welcome to Booking Appointments RESTful API
-==Description:
+==Description
     The project contains RESTful API using Ruby On Rails. The API expose the
     following CRUD operations on appointments data.
     - Create POST     /appointments
@@ -9,7 +9,7 @@
     An appointment resource, is considered valid if start and end times are in the future and do not overlap an existing
     appointment on the same day. All operations will return valid JSON along with the appropriate HTTP status codes.
     - Show   appointments/:id (not required by the spec , but it is convenient for testing.
-==Test suite:
+==Test suite
     I prefer RSpec over MiniTest because the syntax encourages human readable tests.
     However the API contains both. Therefore the developer can benchmark the framework to use.
     rake spec
@@ -26,7 +26,7 @@
     open doc/app/index.html
 ==Database Creation
     db:setup will import the data from db\Carecloud Ruby data.
-==documentation:
+==documentation
     rake doc:app
     open doc/app/index.html
 location: https://github.com/jookie/GreenBook
